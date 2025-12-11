@@ -1,0 +1,75 @@
+streamlit
+openai
+import streamlit as st
+import openai
+
+st.set_page_config(page_title="Chatbot Soạn Giáo Án", page_icon="📘")
+
+st.markdown("""
+<h1 style='text-align:center; color:#2B5EA4;'>🤖 Chatbot Soạn Giáo Án – CTGDPT 2018</h1>
+<p style='text-align:center;'>Hỗ trợ soạn bài, yêu cầu cần đạt, năng lực, phẩm chất và câu hỏi vận dụng.</p>
+""", unsafe_allow_html=True)
+
+# ===== ĐẦU VÀO =====
+api_key = st.text_input("🔑 Nhập API Key OpenAI:", type="password")
+subject = st.text_input("📘 Môn học:")
+grade = st.text_input("🎓 Lớp:")
+topic = st.text_input("✏️ Chủ đề / Tên bài học:")
+
+btn = st.button("Soạn giáo án")
+
+# ===== HÀM SINH NỘI DUNG =====
+def generate_lesson(api_key, subject, grade, topic):
+    openai.api_key = api_key
+
+    prompt = f"""
+Bạn là chuyên gia soạn giáo án theo CTGDPT 2018.
+Hãy soạn đầy đủ cho bài học sau:
+
+Môn: {subject}
+Lớp: {grade}
+Bài: {topic}
+
+YÊU CẦU:
+1. Viết phần I. YÊU CẦU CẦN ĐẠT theo đúng 3 mức:
+- Nhận biết
+- Thông hiểu
+- Vận dụng (gắn với thực tiễn)
+
+2. Năng lực: 
+- Gồm năng lực chung
+- Năng lực đặc thù môn {subject}
+
+3. Phẩm chất:
+- Nhân ái, trách nhiệm, chăm chỉ, trung thực, tự tin
+
+4. Cuối bài phải có:
+- Câu hỏi vận dụng gắn với thực tế
+"""
+
+    response = openai.chat.completions.create(
+        model="gpt-4.1",
+        messages=[{"role":"user","content":prompt}],
+        temperature=0.3
+    )
+
+    return response.choices[0].message["content"]
+
+# ===== XỬ LÝ =====
+if btn:
+    if api_key and subject and grade and topic:
+        with st.spinner("⏳ Đang soạn bài..."):
+            output = generate_lesson(api_key, subject, grade, topic)
+            st.success("🎉 Hoàn thành!")
+            st.write(output)
+    else:
+        st.error("⚠️ Vui lòng nhập đủ thông tin.")
+# 🤖 Chatbot Soạn Giáo Án – CTGDPT 2018
+
+Dự án này cung cấp chatbot giúp giáo viên:
+- Soạn giáo án nhanh
+- Đúng yêu cầu CTGDPT 2018
+- Có năng lực chung và đặc thù
+- Câu hỏi vận dụng gắn với thực tế
+
+Chạy online miễn phí bằng HuggingFace Spaces.
