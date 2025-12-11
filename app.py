@@ -5,7 +5,8 @@ import os
 st.set_page_config(page_title="Chatbot Soạn Giáo Án", page_icon="📘")
 
 st.markdown("""
-<h1 style='text-align:center; color:#2B5EA4;'>🤖 Chatbot Soạn Giáo Án – CTGDPT 2018</h1>
+<h1 style='text-align:center; color:#2B5EA4;'>🤖 Nguyễn Văn Nguyên - Tiểu học Phương Độ
+Chatbot Soạn Giáo Án – CTGDPT 2018</h1>
 <p style='text-align:center;'>Hỗ trợ soạn bài, yêu cầu cần đạt, năng lực, phẩm chất và câu hỏi vận dụng.</p>
 """, unsafe_allow_html=True)
 
